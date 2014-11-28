@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Todo List-Backbone</title>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js">
+  <head>
+    <title>Todo List-Backbone</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+  </head>
 
-</head>
-<body>
+  <body>
+    <div class="container">
+      <h1>Todo List</h1>
+      <div class="page"></div>
+    </div>
 
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-</body>
+  <!-- javascript files -->
+  <script src="javascript/jquery.js"></script>
+  <script src="javascript/backbone.js"></script>
+  <script src="javascript/underscore.js"></script>
+  <!-- end javascript files -->
+  <script>
+    var Router = Backbone.Router.extend({
+        routes: {
+          '': 'home'
+        }
+    });
+
+    var router = new Router();
+    router.on('route:home', function(){
+      console.log('we have loaded the homepage')
+    });
+
+    Backbone.history.start();
+  </script>
+  </body>
+
 </html>
