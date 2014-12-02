@@ -17,21 +17,21 @@
   <script src="javascript/jquery.js"></script>
   <script src="javascript/backbone.js"></script>
   <script src="javascript/underscore.js"></script>
+   <script src="javascript/application.js"></script>
+   <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <!-- end javascript files -->
-  <script>
-    var Router = Backbone.Router.extend({
-        routes: {
-          '': 'home'
-        }
+  <script type="text/javascript">
+    var Tweet = Backbone.model.extend({
+      initialize: function(){
+        alert("Hello, world.")
+      }
     });
 
-    var router = new Router();
-    router.on('route:home', function(){
-      console.log('we have loaded the homepage')
-    });
+    var tweet = new Tweet({author: "alex", status: "I am recording this awesome new video"})
 
-    Backbone.history.start();
+    console.log(tweet.get('status'));
   </script>
+
   </body>
 
 </html>

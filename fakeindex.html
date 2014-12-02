@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To do List</title>
+    <style>
+        .completed{
+            text-decoration: line-through;
+            color: #666;
+        }
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="javascript/underscore.js"></script>
+    <script type="text/javascript" src="javascript/backbone.js"></script>
+</head>
+<body>
+
+    <h1>My Todos</h1>
+    <div id="tasks">
+
+        <button class="add">Add Task</button>
+        <button class="clear hide">Clear All</button>
+        <ul></ul>
+
+    </div>
+
+    <script id="taskTemplate" type="text/template">
+        <span class="<%= completed ? 'completed' : 'incomplete' %>"><%= text %></span>
+        <button class="complete"></button>
+        <button class="delete"></button>
+    </script>
+
+
+    <script type="text/javascript">
+
+        var Task = Backbone.Model.extend({
+            defaults: {text: 'New task', completed: false}
+
+        });
+
+        var Tasks = Backbone.Collection.extend({
+            model: Task,
+            el: '#tasks',
+            initialize: function(){
+                this.collection = new Tasks;
+                this.collection.on('add', this.appendNewTask, this);
+
+                this.items = this.$el.children('ul');
+            },
+
+            add: function(){
+                var text = prompt('What do you need to do?');
+                var task = new Task({text: text});
+                this.collection.add(task);
+            },
+
+            appendNewTask: function(task){
+                var TasksView = new TasksView({model:task});
+                this.items.append(TasksView.el);
+            },
+
+            completed: function(){
+                return _.filter(this.models, function(model){
+                    return model.get('completed');
+                });
+            }
+        });
+
+        var TasksView = Backbone.View.extend({
+            tagName: 'li',
+            el: '#tasks',
+            template: _.template($('#taskTemplate').html()),
+
+            initialize: function(){
+
+                this.model.on('change', this.render, this);
+                this.model.on('remove', this.unrender, this);
+                this.render();
+            },
+
+            render: function(){
+                var markup = this.template(this.model.toJSON());
+                    this.$el.html(markup);
+            },
+
+            unrender: function(){
+                this.$el.remove();
+            },
+
+            events: {
+                'click .add': 'add',
+                'click .clear': 'clearCompleted',
+                'click .delete': 'delete',
+                'click .complete': 'updateStatus',
+                'dblclick span': 'edit'
+            },
+
+            add: function(){
+                    var text = prompt('What do you need to do?');
+                    var task = new Task({text: text});
+            },
+
+            delete: function(){
+                this.model.destroy();
+                this.$el.remove();
+            },
+
+            updateStatus: function(){
+                this.model.set('completed', !this.model.get('completed'));
+            },
+
+            edit: function(){
+                var text = prompt('What should we change your task to?', this.model.get('text'))
+                this.model.set('text',text);
+            },
+
+            clearCompleted: function(){
+                var completedTasks = this.collection.completed();
+                this.collection.remove(completedTasks);
+            }
+
+        });
+
+        new TasksView;
+
+    </script>
+
+
+    <!-- Template JS -->
+</body>
+</html>
