@@ -14,23 +14,16 @@
 
 
   <!-- javascript files -->
-  <script src="javascript/jquery.js"></script>
-  <script src="javascript/backbone.js"></script>
-  <script src="javascript/underscore.js"></script>
-   <script src="javascript/application.js"></script>
-   <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
+  <script src="bower_components/backbone/backbone.js"></script>
+  <script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+  <script src="javascript/models/todo.js"></script>
+  <script src="javascript/collections/todos.js"></script>
+  <script src="javascript/views/todo-view.js"></script>
+  <script src="javascript/views/app-view.js"></script>
+  <script src="javascript/routers/router.js"></script>
   <!-- end javascript files -->
-  <script type="text/javascript">
-    var Tweet = Backbone.model.extend({
-      initialize: function(){
-        alert("Hello, world.")
-      }
-    });
-
-    var tweet = new Tweet({author: "alex", status: "I am recording this awesome new video"})
-
-    console.log(tweet.get('status'));
-  </script>
 
   </body>
 
