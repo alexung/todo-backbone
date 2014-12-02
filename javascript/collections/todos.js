@@ -5,7 +5,7 @@ var app = app || {};
 
   var Todos = Backbone.Collection.extend({
     model: app.Todo,
-    localStorage: new Backbone.localStorage('todos-backbone'),
+    localStorage: new Backbone.LocalStorage('todos-backbone'),
     completed: function(){
       return this.where({
         completed: true});
