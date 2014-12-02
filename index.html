@@ -1,30 +1,70 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Todo List-Backbone</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-  </head>
+<head>
+  <title>Todo List-Backbone</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/application.css">
+</head>
 
-  <body>
-    <div class="container">
+<body>
+  <section id="todoapp">
+    <div id="header">
       <h1>Todo List</h1>
-      <div class="page"></div>
+      <input id="new-todo" placeholder="What can be accomplished?" autofocus>
     </div>
+    <section id="main">
+      <input id="toggle-all" type="checkbox">
+      <label for="toggle-all">
+        Mark all as complete</label>
+        <ul id="todo-list"></ul>
+      </section>
+      <footer id="footer"></footer>
+    </section>
+    <footer id="info">
+      <p>Double-click to edit a todo</p>
+    </footer>
+    <script type="text/template" id="item-template">
+      <div class="view">
+        <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
+        // is it appropriate to have the <%- below?
+        <label><%- title %></label>
+        <button class="destroy"></button>
+        </div>
+        <input class="edit" value="<%- title %>">
+    </script>
 
+    <script type="text/template" id="stats-template">
+    <span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
+    <ul id="filters">
+      <li>
+        <a class="selected" href="#/">All</a>
+      </li>
+      <li>
+        <a href="#/active">Active</a>
+      </li>
+      <li>
+        <a href="#/completed">Completed</a>
+      </li>
+    </ul>
+    <% if (completed) { %>
+      <button id="clear-completed">Clear completed (<%= completed %>)</button>
+    <% } %>
+    </script>
 
-  <!-- javascript files -->
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/underscore/underscore.js"></script>
-  <script src="bower_components/backbone/backbone.js"></script>
-  <script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
-  <script src="javascript/models/todo.js"></script>
-  <script src="javascript/collections/todos.js"></script>
-  <script src="javascript/views/todo-view.js"></script>
-  <script src="javascript/views/app-view.js"></script>
-  <script src="javascript/routers/router.js"></script>
-  <!-- end javascript files -->
+    <!-- javascript files -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+    <script src="javascript/models/todo.js"></script>
+    <script src="javascript/collections/todos.js"></script>
+    <script src="javascript/views/todo-view.js"></script>
+    <script src="javascript/views/app-view.js"></script>
+    <script src="javascript/routers/router.js"></script>
+     <script src="javascript/application.js"></script>
+    <!-- end javascript files -->
 
   </body>
 
-</html>
+  </html>
