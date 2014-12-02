@@ -1,0 +1,21 @@
+{
+  "name": "todo-backbone",
+  "version": "0.0.0",
+  "homepage": "https://github.com/alexung/todo-backbone",
+  "authors": [
+    "Alex Ung <alexung.ucsb@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone.localStorage": "~1.1.14",
+    "backbone": "~1.1.2",
+    "jquery": "~2.1.1"
+  }
+}
