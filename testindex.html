@@ -106,9 +106,10 @@
     });
 
     // my attempt at stopping dupes.
+    //
    app.TodoList.prototype.add = function(todo) {
 
-    var isDupe = this.any(function(_todo){ return _todo.get('title') === todo.get('title');
+    var isDupe = this.any(function(_todo){ return _todo.get('title').toLowerCase() === todo.get('title').toLowerCase();
     });
 
    return isDupe ? alert("You've already added this item!") : Backbone.Collection.prototype.add.call(this, todo);}
