@@ -34,6 +34,7 @@
   <section id="todoapp">
     <header id="header">
       <h1>Todos</h1>
+      <div id="dupe-message"></div>
       <input id="new-todo" placeholder="What needs to be done?" autofocus>
       <div>
         <a href="#/">show all</a>
@@ -45,9 +46,9 @@
       <ul id="todo-list"></ul>
     </section>
   </section>
-  <div>
+<!--   <div>
     <p>Find the tutorial and code in <a href="http://adrianmejia.com/blog/2012/09/11/backbone-dot-js-for-absolute-beginners-getting-started/">here</a></p>
-  </div>
+  </div> -->
 
   <!-- Templates -->
   <script type="text/template" id="item-template">
@@ -103,6 +104,23 @@
         return this.without.apply(this, this.completed());
       }
     });
+
+    // my attempt at stopping dupes.
+    //
+   app.TodoList.prototype.add = function(todo) {
+
+    var isDupe = this.any(function(_todo){ return _todo.get('title').toLowerCase() === todo.get('title').toLowerCase();
+    });
+
+    // if(isDupe) {
+    //   alert("You've already added this item!")
+    // } else {
+    //   Backbone.Collection.prototype.add.call(this, todo);
+    // };
+   return isDupe ? alert("You've already added this item!") : Backbone.Collection.prototype.add.call(this, todo);}
+
+ // end attempt at stopping dupes
+
 
     // instance of the Collection
     app.todoList = new app.TodoList();
@@ -176,7 +194,10 @@
       },
       addOne: function(todo){
         var view = new app.TodoView({model: todo});
-        $('#todo-list').append(view.render().el);
+
+        $('#todo-list').append(view.
+          render().el);
+
       },
       addAll: function(){
         this.$('#todo-list').html(''); // clean the todo list
