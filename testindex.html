@@ -7,10 +7,6 @@
 
 </head>
 <body>
-  <!-- ========= -->
-  <!-- Your HTML -->
-  <!-- ========= -->
-
   <section id="todoapp">
     <header id="header">
       <div class="todo-title">
@@ -182,13 +178,6 @@ app.TodoList = Backbone.Collection.extend({
       },
       addOne: function(todo){
         var view = new app.TodoView({model: todo});
-        // begin isDupe
-
-       //  var isDupe = this.any(function(_todo){ return _todo.get('title').toLowerCase() === todo.get('title').toLowerCase();
-       //   });
-
-       // return isDupe ? alert("You've already added this item to the todo list!") : $('#todo-list').append(view.render().el);
-       // end isDupe
 
         $('#todo-list').append(view.render().el);
 
