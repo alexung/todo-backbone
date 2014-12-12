@@ -1,100 +1,51 @@
-var app = app || {};
+'use strict';
+var app = {};
 
-(function($){
-  'use strict';
+   // renders the full list of todo items calling TodoView for each one.
+    app.AppView = Backbone.View.extend({
+      el: '#todoapp',
+      initialize: function () {
+        this.input = this.$('#new-todo');
+        app.todoList.on('add', this.addAll, this);
+        app.todoList.on('reset', this.addAll, this);
+        app.todoList.fetch(); // Loads list from local storage
+      },
+      events: {
+        'keypress #new-todo': 'createTodoOnEnter'
+      },
+      createTodoOnEnter: function(e){
+        if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13
+          return;
+        }
+        app.todoList.create(this.newAttributes());
+        this.input.val(''); // clean input box
+      },
+      addOne: function(todo){
+        var view = new app.TodoView({model: todo});
 
-  app.AppView = Backbone.View.extend({
-    el: '#todoapp',
-    statsTemplate: _.template($('#stats-template').html()),
-    events: {
-      'keypress #new-todo': 'createOnEnter',
-      'click #clear-completed': 'clearCompleted',
-      'click #toggle-all': 'toggleAllComplete'
-    },
-    initialize: function(){
-      this.allCheckbox = this.$('#toggle-all')[0];
-      this.$input = this.$('#new-todo');
-      this.$footer = this.$('#footer');
-      this.$main = this.$('#main');
-      this.$list = $('#todo-list');
+        $('#todo-list').append(view.
+          render().el);
 
-      this.listenTo(app.todos, 'add', this.addOne);
-      this.listenTo(app.todos, 'reset', this.addAll);
-      this.listenTo(app.todos, 'change:completed', this.filterOne);
-      this.listenTo(app.todos, 'filter', this.filterAll);
-      this.listenTo(app.todos, 'all', this.render);
-
-      app.todos.fetch({reset: true});
-    },
-
-    render: function(){
-      var completed = app.todos.completed().length;
-      var remaining = app.todos.remaining().length;
-
-      if (app.todos.length) {
-        this.$main.show();
-        this.$footer.show();
-
-        this.$footer.html(this.statsTemplate({
-          completed: completed,
-          remaining: remaining
-        }));
-
-        this.$('#filters li a').removeClass('selected').filter('[href="#/' + (app.TodoFilter || '') + '"]').addClass('selected');
-      } else {
-        this.$main.hide();
-        this.$footer.hide();
+      },
+      addAll: function(){
+        this.$('#todo-list').html(''); // clean the todo list
+        // filter todo item list
+        switch(window, filter){
+          case 'pending':
+              _.each(app.todoList.remaining(), this.addOne);
+              break;
+            case 'completed':
+              _.each(app.todoList.completed(), this.addOne);
+              break;
+            default:
+              app.todoList.each(this.addOne, this);
+              break;
+        }
+      },
+      newAttributes: function(){
+        return {
+          title: this.input.val().trim(),
+          completed: false
+        }
       }
-
-      this.allCheckbox.checked = !remaining;
-    },
-
-    addOne: function(todo){
-      var view = new app.TodoView({ model: todo });
-      this.$list.append(view.render().el);
-    },
-
-    addAll: function(){
-      this.$list.html('');
-      app.todos.each(this.addOne, this);
-    },
-
-    filterOne: function(todo){
-      todo.trigger('visible');
-    },
-
-    filterAll: function(){
-      app.todos.each(this.filterOne, this);
-    },
-
-    newAttributes: function(){
-      return {
-        title: this.$input.val().trim(),
-        order: app.todos.nextOrder(),
-        completed: false
-      };
-    },
-
-    createOnEnter: function(e){
-      if (e.which === ENTER_KEY && this.$input.val().trim()) {
-        app.todos.create(this.newAttributes());
-        this.$input.val('');
-      }
-    },
-
-    clearCompleted: function(){
-      _.invoke(app.todos.completed(), 'destroy');
-      return false;
-    },
-
-    toggleAllComplete: function(){
-      var completed = this.allCheckbox.checked;
-
-      app.todos.each(function(todo){
-        todo.save({
-          completed: completed
-        });
-      });
-    }
-  });
-})(jQuery);
+    });
