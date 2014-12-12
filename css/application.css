@@ -1,14 +1,57 @@
-  /* Hides bullet points from todo list */
-    #todoapp ul {
-      list-style-type: none;
-    }
+/* Hides bullet points from todo list */
+#todoapp ul {
+  list-style-type: none;
+}
 
-    #todo-list input.edit {
-      display: none; /* Hides input box*/
-    }
-    #todo-list .editing label {
-      display: none; /* Hides label text when .editing*/
-    }
-    #todo-list .editing input.edit {
-      display: inline; /* Shows input text box when .editing*/
-    }
+#todo-list input.edit {
+  display: none; /* Hides input box*/
+}
+
+#todo-list .editing label {
+  display: none; /* Hides label text when .editing*/
+}
+
+#todo-list .editing input.edit {
+  display: inline; /* Shows input text box when .editing*/
+}
+
+#todo-list {
+  font-family:'Montserrat', sans-serif;
+  margin-left: 40%;
+}
+
+#new-todo {
+  width: 300px;
+  text-align: center;
+}
+
+.todo-holder {
+  text-align: center;
+}
+
+.todo-filters {
+  font-family:'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.todo-title {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.destroy {
+  border-radius: 15px;
+  font-family: 'Montserrat', sans-serif;
+  padding:1px;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.todo-filters a:link, a:visited, a:active {
+  color: #000;
+}
+
+.todo-filters a:hover {
+  color: #707070;
+}
